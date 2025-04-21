@@ -1,29 +1,20 @@
-import { useState } from "react";
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 
-import { Flex } from "@chakra-ui/react";
-import { Heading } from "@chakra-ui/react";
-import { Slider } from "@chakra-ui/react";
+import Landing from "./pages/Landing";
+//import SignIn from "./pages/SignIn";
+//import SignUp from "./pages/SignUp";
 
 function App() {
-    const [count, setCount] = useState(0);
-
     return (
         <>
-            <Flex gap="20" direction="column" align="center">
-                <Heading size="5xl">React + Vite + Chakra</Heading>
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <Slider.Root width="350px" defaultValue={[40]}>
-                    <Slider.Control>
-                        <Slider.Track>
-                            <Slider.Range />
-                        </Slider.Track>
-                        <Slider.Thumbs />
-                    </Slider.Control>
-                </Slider.Root>
-            </Flex>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/sign-in" element={<Landing />} />
+                    <Route path="/sign-up" element={<Landing />} />
+                </Routes>
+            </Router>
         </>
     );
 }
