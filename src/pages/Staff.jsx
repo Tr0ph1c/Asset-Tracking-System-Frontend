@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // Chakra UI
-import { Text, Container, Field, Input, Stack, Flex, Button, FieldRequiredIndicator } from "@chakra-ui/react"
+import { Text, Container, Field, Input, Stack, Flex, Button } from "@chakra-ui/react"
 import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster"
 
@@ -55,29 +55,68 @@ const Staff = () => {
         }));
         
     };
-    
-    const handleSubmit = async (e) => {
-        
-        validate('name', formData.name);
-        validate('email', formData.email);  
-        validate('password', formData.password);
+
+    const isFormValid = () => {
+        let nameError = validateRequiredField('name', formData.name);
+        let emailError = validateEmail(formData.email);
+        let passwordError = validateRequiredField('password', formData.password);
+        setErrors({
+            name: nameError,
+            email: emailError,
+            password: passwordError
+        });
         
         // Check for errors
-        if (errors.name || errors.email || errors.password) {
+        if (nameError || emailError || passwordError) {
             toaster.create({
                 title: "Please fill all required fields correctly",
                 type: "error",
             });
-            return;
+            return false;
         }
-
+        return true;
+    }
+    
+    const handleSubmit = async (e) => {
+        if (!isFormValid()) return;
+        
         setIsSubmitting(true);
-        console.log(formData);
-        setTimeout(function(){
-            //do what you need here
-        }, 2000);
-        setIsSubmitting(false);
-        console.log("errors");
+        try {
+            const response = await fetch(staffEndPoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) throw new Error('Failed to submit form');
+
+            toaster.create({
+                title: "Staff member added successfully",
+                type: "success",
+            });
+
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                password: ''
+            });
+            setErrors({
+                name: '',
+                email: '',
+                password: ''
+            });
+
+        } catch (error) {
+            toaster.create({
+                title: "Connection Error Occurred",
+                type: "error",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
 
     }
 
@@ -140,8 +179,8 @@ const Staff = () => {
                     variant="solid" 
                     mt="2em"
                     type="button"
-                    isLoading={isSubmitting}
-                    isDisabled={isSubmitting}
+                    loading={isSubmitting}
+                    disables={isSubmitting}
                     onClick={handleSubmit}
                     loadingText="Adding..."
                 >
