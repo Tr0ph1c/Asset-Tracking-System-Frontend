@@ -17,9 +17,9 @@ const Landing = () => {
                         Sign In
                     </Button>
                 </Link>
-                <Link to="/sign-up">
+                <Link to="/learn-more">
                     <Button w="15em" variant="outline">
-                        Sign Up
+                        Learn More
                     </Button>
                 </Link>
             </Flex>
