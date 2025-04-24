@@ -7,7 +7,7 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { toaster } from "@/components/ui/toaster"
 
 // Helping functions
-import { validateEmail, validateRequiredField, staffEndPoint } from "/src/Helper.js";
+import { validateEmail, validateRequiredField, staffEndPoint } from "/src/utilities/Helper.js";
 
 const Staff = () => {
 

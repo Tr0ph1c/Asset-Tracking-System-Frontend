@@ -9,6 +9,8 @@ export const validateRequiredField = (name, value) => {
     return '';
 };
 
+// Endpoints
+
 export const SERVER_URL                = "http://localhost:8080/"
 export const assetEndPoint             = `${SERVER_URL}api/asset`
 export const staffEndPoint             = `${SERVER_URL}api/staff`
