@@ -1,6 +1,5 @@
 import { Link, Box, Flex, Text, Button, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Outlet } from "react-router";
 
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,8 +12,6 @@ const NavBar = (props) => {
       <MenuToggle toggle={toggle} isOpen={isOpen} />
       <MenuLinks isOpen={isOpen} />
     </NavBarContainer>
-
-    <Outlet />
     </>
   );
 };

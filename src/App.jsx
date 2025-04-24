@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router";
 import Landing from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import Dashboard from "./Dashboard";
+import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Staff from "./pages/Staff";
 
