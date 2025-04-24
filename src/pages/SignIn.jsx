@@ -50,14 +50,6 @@ const SignIn = () => {
             <Button background="whiteAlpha.800" variant="solid" mt="2em">
                 Sign In
             </Button>
-            <Container>
-                Don't have an account?{" "}
-                <Link to="/sign-up">
-                    <Text as="span" color="blue.300" textDecoration="underline">
-                        Create Account
-                    </Text>
-                </Link>
-            </Container>
         </Stack>
     </Container>
     </Flex>
