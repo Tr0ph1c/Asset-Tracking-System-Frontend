@@ -7,6 +7,7 @@ import LearnMore from "./pages/LearnMore";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Staff from "./pages/Staff";
+import Asset from "./pages/Asset";
 
 import { Toaster } from "@/components/ui/toaster"
 
@@ -21,7 +22,7 @@ function App() {
                     <Route path="/learn-more" element={<LearnMore />} />
                     <Route path="/manager-home" element={<Dashboard />}>
                         <Route path="" element={<Home />}/>
-                        <Route path="add" element={<Home />}/>
+                        <Route path="add" element={<Asset />}/>
                         <Route path="staff" element={<Staff />}/>
                     </Route>
                 </Routes>
