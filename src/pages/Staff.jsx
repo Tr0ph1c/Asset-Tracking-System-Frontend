@@ -1,5 +1,5 @@
 // react
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 // Chakra UI
 import { Text, Container, Field, Input, Stack, Flex, Button } from "@chakra-ui/react"
@@ -175,7 +175,7 @@ const Staff = () => {
                         mt="2em"
                         type="button"
                         loading={isSubmitting}
-                        disables={isSubmitting}
+                        disabled={isSubmitting}
                         onClick={handleSubmit}
                         loadingText="Adding..."
                     >
