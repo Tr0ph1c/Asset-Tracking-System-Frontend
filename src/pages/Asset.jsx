@@ -104,8 +104,6 @@ const Asset = () => {
         }));
 
         formData.current[name] = value;
-
-        console.log(formData.current);
     };
 
     // UI
