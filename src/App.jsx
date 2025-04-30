@@ -21,15 +21,15 @@ function App() {
                     <Route path="/sign-in" element={<SignIn />} />
                     <Route path="/learn-more" element={<LearnMore />} />
                     <Route path="/manager-home" element={<Dashboard />}>
-                        <Route path="" element={<Home />}/>
-                        <Route path="add" element={<Asset />}/>
-                        <Route path="staff" element={<Staff />}/>
+                        <Route path="" element={<Home />} />
+                        <Route path="add" element={<Asset />} />
+                        <Route path="staff" element={<Staff />} />
                     </Route>
                 </Routes>
             </Router>
-            
+
             <Toaster />
-            
+
         </>
     );
 }

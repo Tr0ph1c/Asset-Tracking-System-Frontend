@@ -85,6 +85,8 @@ const SignIn = () => {
 
             return response.json();
         }).then((data) => {
+            sessionStorage.setItem("id", data.id);
+            sessionStorage.setItem("role", data.role);
             switch (data.role) {
                 case "MANAGER":
                     navigate("/manager-home");
