@@ -87,16 +87,7 @@ const SignIn = () => {
         }).then((data) => {
             sessionStorage.setItem("id", data.id);
             sessionStorage.setItem("role", data.role);
-            switch (data.role) {
-                case "MANAGER":
-                    navigate("/manager-home");
-                    break;
-                case "STAFF":
-                    navigate("/staff-home");
-                    break;
-                default:
-                    throw new Error('Account error');
-            }
+            navigate("/manager-home")
         }).catch((error) => {
             console.log(error);
             toaster.create({
