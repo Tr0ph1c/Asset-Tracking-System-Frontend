@@ -57,6 +57,8 @@ const MenuItem = ({ children, isLast, to = "/", ...rest }) => {
 };
 
 const MenuLinks = ({ isOpen }) => {
+  let isManager = (sessionStorage.getItem("role") == "MANAGER");
+
   return (
     <Box
       display={{ base: isOpen ? "block" : "none", md: "block" }}
@@ -70,8 +72,8 @@ const MenuLinks = ({ isOpen }) => {
         pt="0"
       >
         <MenuItem to="/manager-home">Home</MenuItem>
-        <MenuItem to="/manager-home/add">Add Asset</MenuItem>
-        <MenuItem to="/manager-home/staff">Manage Staff</MenuItem>
+        {isManager && <MenuItem to="/manager-home/add">Add Asset</MenuItem>}
+        {isManager && <MenuItem to="/manager-home/staff">Manage Staff</MenuItem>}
         <MenuItem to="/sign-in" isLast>
           <Button
             onClick={clearSession}

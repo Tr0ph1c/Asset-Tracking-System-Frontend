@@ -11,6 +11,8 @@ const STATUS_CODES = createListCollection({
 })
 
 const Home = () => {
+  let isManager = (sessionStorage.getItem("role") == "MANAGER");
+
   let [error, setError] = useState(false);
   let [loading, setLoading] = useState(true);
 
@@ -102,19 +104,36 @@ const Home = () => {
             <Card.Header>
               <Card.Title>{asset.name}</Card.Title>
             </Card.Header>
-            <Card.Body>
+            <Card.Body gap="1em">
+              <AssetButtons _isManager={isManager} _asset={asset} />
             </Card.Body>
             <Card.Footer justifyContent="space-between">
               <Tag.Root size="lg" colorPalette="green">
                 <Tag.Label>{asset.status}</Tag.Label>
               </Tag.Root>
-              <Button>View</Button>
             </Card.Footer>
           </Card.Root>
         ))}
       </Grid>
     </>
   )
+}
+
+// TODO:
+// Add functionality to the buttons using the
+// asset object passed to the function
+function AssetButtons({ _isManager, _asset }) {
+  if (_isManager) {
+    return (
+      <>
+        <Button size="xs" fontSize="sm" colorPalette="green">Assign</Button>
+        <Button size="xs" fontSize="sm" colorPalette="teal">Maintain</Button>
+        <Button size="xs" fontSize="sm" colorPalette="red" variant="subtle">Delete</Button>
+      </>
+    );
+  } else {
+    return <Button colorPalette="red">Return</Button>;
+  }
 }
 
 export default Home
