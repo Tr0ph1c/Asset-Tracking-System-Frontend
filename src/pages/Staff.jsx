@@ -106,7 +106,7 @@ const Staff = () => {
 
         } catch (error) {
             toaster.create({
-                title: "Connection Error Occurred",
+                title: error.message,
                 type: "error",
             });
         } finally {

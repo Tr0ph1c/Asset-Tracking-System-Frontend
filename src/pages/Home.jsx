@@ -24,7 +24,7 @@ const Home = () => {
     fetch("http://localhost:8080/api/asset", { method: "GET" })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Unexpected Error, error code: " + response.status);
         }
         return response.json();
       })
