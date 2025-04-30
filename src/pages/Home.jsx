@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Input, Grid, Card, Button, Tag, Flex, Select, Portal, createListCollection } from "@chakra-ui/react";
-import { assignAssetEndPoint, leaveAssetEndPoint, maintainAssetEndPoint } from "@/utilities/Helper";
+import { assetEndPoint, assignAssetEndPoint, leaveAssetEndPoint, maintainAssetEndPoint } from "@/utilities/Helper";
 import { toaster } from "@/components/ui/toaster";
 
 const STATUS_CODES = createListCollection({
@@ -134,7 +134,7 @@ function AssetButtons({ _isManager, _asset }) {
         <Button size="xs" fontSize="sm" colorPalette="teal"
           name={_asset.id} onClick={maintainAsset}>Maintain</Button>
         <Button size="xs" fontSize="sm" colorPalette="red" variant="subtle"
-          name={_asset.id} /*onClick={deleteAsset}*/>Delete</Button>
+          name={_asset.id} onClick={deleteAsset}>Delete</Button>
       </>
     );
   } else {
@@ -189,6 +189,33 @@ function maintainAsset(e) {
   }).then((data) => {
     toaster.create({
       title: `${data.name} put into maintenance`,
+      type: "success",
+    });
+  }).catch((error) => {
+    console.log(error);
+    toaster.create({
+      title: error.message,
+      type: "error",
+    });
+  }).finally(() => {
+    // DIRTY HACK..
+    window.location.reload();
+  });
+}
+
+function deleteAsset(e) {
+  fetch(assetEndPoint + "/" + e.target.name, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }).then((response) => {
+    if (!response.ok) throw new Error('Network error');
+
+    return response.json();
+  }).then((data) => {
+    toaster.create({
+      title: `Deleted ${data.name} successfully`,
       type: "success",
     });
   }).catch((error) => {
