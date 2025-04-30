@@ -130,7 +130,7 @@ function AssetButtons({ _isManager, _asset }) {
     return (
       <>
         <Button size="xs" fontSize="sm" colorPalette="green"
-          name={_asset.id} /*onClick={assignAsset}*/>Assign</Button>
+          name={_asset.id} onClick={assignAsset}>Assign</Button>
         <Button size="xs" fontSize="sm" colorPalette="teal"
           name={_asset.id} onClick={maintainAsset}>Maintain</Button>
         <Button size="xs" fontSize="sm" colorPalette="red" variant="subtle"
@@ -216,6 +216,37 @@ function deleteAsset(e) {
   }).then((data) => {
     toaster.create({
       title: `Deleted ${data.name} successfully`,
+      type: "success",
+    });
+  }).catch((error) => {
+    console.log(error);
+    toaster.create({
+      title: error.message,
+      type: "error",
+    });
+  }).finally(() => {
+    // DIRTY HACK..
+    window.location.reload();
+  });
+}
+
+function assignAsset(e) {
+  let _staffID = prompt("Enter staff member ID to assign to:");
+
+  fetch(assignAssetEndPoint + "?" + new URLSearchParams(
+    { staffID: _staffID, assetID: e.target.name }
+  ), {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }).then((response) => {
+    if (!response.ok) throw new Error('Network error');
+
+    return response.json();
+  }).then((data) => {
+    toaster.create({
+      title: `Assigned ${data.name} successfully`,
       type: "success",
     });
   }).catch((error) => {
