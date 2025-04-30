@@ -12,6 +12,7 @@ export const validateRequiredField = (name, value) => {
 // Endpoints
 
 export const SERVER_URL                = "http://localhost:8080/"
+export const loginEndPoint             = `${SERVER_URL}api/login`
 export const assetEndPoint             = `${SERVER_URL}api/asset`
 export const staffEndPoint             = `${SERVER_URL}api/staff`
 export const assignAssetEndPoint       = `${SERVER_URL}api/assign-asset`
