@@ -72,28 +72,36 @@ const SignIn = () => {
         if (!isFormValid()) return;
 
         setIsSubmitting(true);
-        try {
-            const response = await fetch(loginEndPoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData.current)
-            });
 
+        fetch(loginEndPoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData.current)
+        }).then((response) => {
             if (response.status == 401) throw new Error('Incorrect username or password');
             if (!response.ok) throw new Error('Failed to submit form');
 
-            navigate("/manager-home");
-        } catch (error) {
+            return response.json();
+        }).then((data) => {
+            switch (data.role) {
+                case "MANAGER":
+                    navigate("/manager-home");
+                    break;
+                case "STAFF":
+                    navigate("/staff-home");
+                    break;
+                default:
+                    throw new Error('Account error');
+            }
+        }).catch((error) => {
             console.log(error);
             toaster.create({
                 title: error.message,
                 type: "error",
             });
-        } finally {
-            setIsSubmitting(false);
-        }
+        }).finally(() => { setIsSubmitting(false) });
     }
 
     //UI
