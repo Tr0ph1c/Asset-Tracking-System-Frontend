@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Input, Grid, Card, Button, Tag, Flex, Select, Portal, createListCollection } from "@chakra-ui/react";
-import { leaveAssetEndPoint } from "@/utilities/Helper";
+import { assignAssetEndPoint, leaveAssetEndPoint, maintainAssetEndPoint } from "@/utilities/Helper";
 import { toaster } from "@/components/ui/toaster";
 
 const STATUS_CODES = createListCollection({
@@ -132,7 +132,7 @@ function AssetButtons({ _isManager, _asset }) {
         <Button size="xs" fontSize="sm" colorPalette="green"
           name={_asset.id} /*onClick={assignAsset}*/>Assign</Button>
         <Button size="xs" fontSize="sm" colorPalette="teal"
-          name={_asset.id} /*onClick={maintainAsset}*/>Maintain</Button>
+          name={_asset.id} onClick={maintainAsset}>Maintain</Button>
         <Button size="xs" fontSize="sm" colorPalette="red" variant="subtle"
           name={_asset.id} /*onClick={deleteAsset}*/>Delete</Button>
       </>
@@ -171,6 +171,35 @@ function returnAsset(e) {
     // a better way would probably be updating the
     // array on local and using a react effect hook
     // to update the UI.
+  });
+}
+
+function maintainAsset(e) {
+  fetch(maintainAssetEndPoint + "?" + new URLSearchParams(
+    { managerID: sessionStorage.getItem("id"), assetID: e.target.name }
+  ), {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  }).then((response) => {
+    if (!response.ok) throw new Error('Network error');
+
+    return response.json();
+  }).then((data) => {
+    toaster.create({
+      title: `${data.name} put into maintenance`,
+      type: "success",
+    });
+  }).catch((error) => {
+    console.log(error);
+    toaster.create({
+      title: error.message,
+      type: "error",
+    });
+  }).finally(() => {
+    // DIRTY HACK..
+    window.location.reload();
   });
 }
 
