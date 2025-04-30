@@ -159,19 +159,18 @@ function returnAsset(e) {
       title: `Returned ${data.name} successfully`,
       type: "success",
     });
+    // DIRTY HACK..
+    window.location.reload();
+    // a better way would probably be updating the
+    // array on local and using a react effect hook
+    // to update the UI.
   }).catch((error) => {
     console.log(error);
     toaster.create({
       title: error.message,
       type: "error",
     });
-  }).finally(() => {
-    // DIRTY HACK..
-    window.location.reload();
-    // a better way would probably be updating the
-    // array on local and using a react effect hook
-    // to update the UI.
-  });
+  })
 }
 
 function maintainAsset(e) {
@@ -191,16 +190,15 @@ function maintainAsset(e) {
       title: `${data.name} put into maintenance`,
       type: "success",
     });
+    // DIRTY HACK..
+    window.location.reload();
   }).catch((error) => {
     console.log(error);
     toaster.create({
       title: error.message,
       type: "error",
     });
-  }).finally(() => {
-    // DIRTY HACK..
-    window.location.reload();
-  });
+  })
 }
 
 function deleteAsset(e) {
@@ -218,16 +216,15 @@ function deleteAsset(e) {
       title: `Deleted ${data.name} successfully`,
       type: "success",
     });
+    // DIRTY HACK
+    window.location.reload();
   }).catch((error) => {
     console.log(error);
     toaster.create({
       title: error.message,
       type: "error",
     });
-  }).finally(() => {
-    // DIRTY HACK..
-    window.location.reload();
-  });
+  })
 }
 
 function assignAsset(e) {
@@ -249,16 +246,15 @@ function assignAsset(e) {
       title: `Assigned ${data.name} successfully`,
       type: "success",
     });
+    // DIRTY HACK
+    window.location.reload();
   }).catch((error) => {
     console.log(error);
     toaster.create({
       title: error.message,
       type: "error",
     });
-  }).finally(() => {
-    // DIRTY HACK..
-    window.location.reload();
-  });
+  })
 }
 
 export default Home
