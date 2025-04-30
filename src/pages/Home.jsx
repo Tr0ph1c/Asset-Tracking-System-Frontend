@@ -31,6 +31,7 @@ const Home = () => {
         return response.json();
       })
       .then((data) => {
+        if (!isManager) data = data.filter((asset) => asset.usedBy == sessionStorage.getItem("id"));
         setJsonAssets(data);
         setAssets(data);
         setLoading(false);
