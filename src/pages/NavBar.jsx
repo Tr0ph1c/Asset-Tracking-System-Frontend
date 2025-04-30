@@ -8,10 +8,10 @@ const NavBar = (props) => {
 
   return (
     <>
-    <NavBarContainer {...props}>
-      <MenuToggle toggle={toggle} isOpen={isOpen} />
-      <MenuLinks isOpen={isOpen} />
-    </NavBarContainer>
+      <NavBarContainer {...props}>
+        <MenuToggle toggle={toggle} isOpen={isOpen} />
+        <MenuLinks isOpen={isOpen} />
+      </NavBarContainer>
     </>
   );
 };
@@ -74,6 +74,7 @@ const MenuLinks = ({ isOpen }) => {
         <MenuItem to="/manager-home/staff">Manage Staff</MenuItem>
         <MenuItem to="/sign-in" isLast>
           <Button
+            onClick={clearSession}
             size="sm"
             rounded="md"
             color="blue.800"
@@ -108,5 +109,9 @@ const NavBarContainer = ({ children, ...props }) => {
     </Flex>
   );
 };
+
+const clearSession = () => {
+  sessionStorage.clear();
+}
 
 export default NavBar;
