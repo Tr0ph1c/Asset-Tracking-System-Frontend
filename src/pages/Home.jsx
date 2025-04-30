@@ -232,7 +232,7 @@ function assignAsset(e) {
   fetch(assignAssetEndPoint + "?" + new URLSearchParams(
     { staffID: _staffID, assetID: e.target.name }
   ), {
-    method: 'DELETE',
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     }
