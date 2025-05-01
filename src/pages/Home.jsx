@@ -59,7 +59,7 @@ const Home = () => {
 
   const applyFiltersToList = () => {
     let filtered = jsonAssets.filter((asset) => asset.name.toLowerCase().includes(searchTerm.current));
-    if (filterValue.current == "ALL")
+    if (filterValue.current != "ALL")
       filtered = filtered.filter((asset) => asset.status == filterValue.current);
 
     setAssets(filtered);
