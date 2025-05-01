@@ -25,7 +25,7 @@ const Home = () => {
   let [assets, setAssets] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/asset", { method: "GET" })
+    fetch(assetEndPoint, { method: "GET" })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Unexpected Error, error code: " + response.status);
