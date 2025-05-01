@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Staff from "./pages/Staff";
 import Asset from "./pages/Asset";
+import History from "./pages/History";
 
 import { Toaster } from "@/components/ui/toaster"
 
@@ -24,6 +25,7 @@ function App() {
                         <Route path="" element={<Home />} />
                         <Route path="add" element={<Asset />} />
                         <Route path="staff" element={<Staff />} />
+                        <Route path="history" element={<History />} />
                     </Route>
                 </Routes>
             </Router>

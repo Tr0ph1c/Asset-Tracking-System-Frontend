@@ -74,6 +74,7 @@ const MenuLinks = ({ isOpen }) => {
         <MenuItem to="/manager-home">Home</MenuItem>
         {isManager && <MenuItem to="/manager-home/add">Add Asset</MenuItem>}
         {isManager && <MenuItem to="/manager-home/staff">Manage Staff</MenuItem>}
+        {isManager && <MenuItem to="/manager-home/history">History</MenuItem>}
         <MenuItem to="/sign-in" isLast>
           <Button
             onClick={clearSession}
