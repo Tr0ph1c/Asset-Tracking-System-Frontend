@@ -129,7 +129,9 @@ const SignIn = () => {
                                 variant="solid" />
                             <Field.ErrorText>This is an error text</Field.ErrorText>
                         </Field.Root>
-                        <Field.Root required orientation="horizontal">
+                        {/* THE FOLLOWING ELEMENT IS A TYPE SELECTOR
+
+                            <Field.Root required orientation="horizontal">
                             <Field.Label>Type</Field.Label>
                             <FieldRequiredIndicator />
                             <Select.Root collection={staffTypes} variant="subtle">
@@ -155,7 +157,7 @@ const SignIn = () => {
                                     </Select.Positioner>
                                 </Portal>
                             </Select.Root>
-                        </Field.Root>
+                        </Field.Root> */}
                         <Button
                             background="whiteAlpha.800"
                             variant="solid"
@@ -174,11 +176,11 @@ const SignIn = () => {
     )
 }
 
-const staffTypes = createListCollection({
-    items: [
-        { label: "Asset Manager", value: "MANAGER" },
-        { label: "Staff", value: "STAFF" }
-    ],
-})
+// const staffTypes = createListCollection({
+//     items: [
+//         { label: "Asset Manager", value: "MANAGER" },
+//         { label: "Staff", value: "STAFF" }
+//     ],
+// })
 
 export default SignIn
