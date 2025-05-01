@@ -54,13 +54,13 @@ const Home = () => {
 
   const filterList = (e) => {
     filterValue.current = e.target.value;
-    console.log(filterValue);
-    //applyFiltersToList();
+    applyFiltersToList();
   }
 
   const applyFiltersToList = () => {
     let filtered = jsonAssets.filter((asset) => asset.name.toLowerCase().includes(searchTerm.current));
-    //filtered = filtered.filter((asset) => asset.status == filterValue.current);
+    if (filterValue.current == "ALL")
+      filtered = filtered.filter((asset) => asset.status == filterValue.current);
 
     setAssets(filtered);
   }
@@ -111,7 +111,7 @@ const Home = () => {
               <AssetButtons _isManager={isManager} _asset={asset} />
             </Card.Body>
             <Card.Footer justifyContent="space-between">
-              <Tag.Root size="lg" colorPalette="green">
+              <Tag.Root size="lg" colorPalette={STATUS_CODES.items.find((item) => item.value == asset.status).color}>
                 <Tag.Label>{asset.status}</Tag.Label>
               </Tag.Root>
             </Card.Footer>
@@ -151,7 +151,7 @@ function returnAsset(e) {
       'Content-Type': 'application/json',
     }
   }).then((response) => {
-    if (!response.ok) throw new Error('Network error');
+    if (!response.ok) throw new Error("Network Error");
 
     return response.json();
   }).then((data) => {
@@ -182,7 +182,7 @@ function maintainAsset(e) {
       'Content-Type': 'application/json',
     }
   }).then((response) => {
-    if (!response.ok) throw new Error('Network error');
+    if (!response.ok) throw new Error("Network Error");
 
     return response.json();
   }).then((data) => {
@@ -208,7 +208,7 @@ function deleteAsset(e) {
       'Content-Type': 'application/json',
     }
   }).then((response) => {
-    if (!response.ok) throw new Error('Network error');
+    if (!response.ok) throw new Error("Network Error");
 
     toaster.create({
       title: `Deleted successfully`,
@@ -237,7 +237,7 @@ function assignAsset(e) {
       'Content-Type': 'application/json',
     }
   }).then((response) => {
-    if (!response.ok) throw new Error('Network error');
+    if (!response.ok) throw new Error("Network Error");
 
     return response.json();
   }).then((data) => {
