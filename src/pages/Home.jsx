@@ -101,11 +101,18 @@ const Home = () => {
         </Select.Root>
       </Flex>
 
-      <Grid templateColumns={{ base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)" }} gap="6">
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)"
+        }} gap="6" overflowY="scroll" h="75svh">
         {assets && assets.map((asset) => (
           <Card.Root key={asset.id}>
             <Card.Header>
               <Card.Title>{asset.name}</Card.Title>
+              <Card.Description>{asset.type}</Card.Description>
             </Card.Header>
             <Card.Body gap="1em">
               <AssetButtons _isManager={isManager} _asset={asset} />

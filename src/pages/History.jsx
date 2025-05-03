@@ -31,7 +31,7 @@ const History = () => {
 
     return (
         <>
-            <Container height="80vh" overflow="scroll" mt="4em" w="100%">
+            <Container overflowY="scroll" h="75svh" mt="4em" w="100%">
                 <VStack>
                     <Card.Root w="100%">
                         <Card.Body gap="1em" flexDirection="row" justifyContent="flex-start" color="orange.400">
