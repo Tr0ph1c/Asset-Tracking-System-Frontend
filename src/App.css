@@ -17,3 +17,9 @@ html {
         rgba(0, 126, 161, 1) 100%
     );
 }
+
+@media only screen and (max-width: 48em) {
+    #root {
+        padding: 1em;
+    }
+}

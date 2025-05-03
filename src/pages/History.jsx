@@ -31,13 +31,13 @@ const History = () => {
 
     return (
         <>
-            <Container overflowY="scroll" h="75svh" mt="4em" w="100%">
+            <Container overflowY="scroll" h="75svh" mt="4em" p="0" w="100%">
                 <VStack>
-                    <Card.Root w="100%">
-                        <Card.Body gap="1em" flexDirection="row" justifyContent="flex-start" color="orange.400">
-                            <Card.Title w="10em">Staff ID</Card.Title>
+                    <Card.Root w="75svw" size={{ base: "xsm", md: "md" }} fontSize={{ base: "10px", md: "20px" }}>
+                        <Card.Body gap="1em" flexDirection="row" justifyContent="center" color="orange.400">
+                            <Card.Title w="2em">ID</Card.Title>
                             <Card.Title w="10em">Staff Name</Card.Title>
-                            <Card.Title w="10em">Asset ID</Card.Title>
+                            <Card.Title w="2em">ID</Card.Title>
                             <Card.Title w="10em">Asset Name</Card.Title>
                             <Card.Title w="10em">Assigned Date</Card.Title>
                             <Card.Title w="10em">Return Date</Card.Title>
@@ -45,11 +45,11 @@ const History = () => {
                     </Card.Root>
 
                     {history && history.map((assignment) => (
-                        <Card.Root key={assignment.id} w="100%">
-                            <Card.Body gap="1em" flexDirection="row" justifyContent="flex-start">
-                                <Card.Title w="10em">{assignment.employee.id}</Card.Title>
+                        <Card.Root key={assignment.id} w="75svw" size={{ base: "xsm", md: "md" }} fontSize={{ base: "10px", md: "20px" }}>
+                            <Card.Body gap="1em" flexDirection="row" justifyContent="center">
+                                <Card.Title w="2em">{assignment.employee.id}</Card.Title>
                                 <Card.Title w="10em">{assignment.employee.name}</Card.Title>
-                                <Card.Title w="10em">{assignment.asset.id}</Card.Title>
+                                <Card.Title w="2em">{assignment.asset.id}</Card.Title>
                                 <Card.Title w="10em">{assignment.asset.name}</Card.Title>
                                 <Card.Title w="10em">{assignment.assignedDate}</Card.Title>
                                 <Card.Title w="10em">{assignment.returnDate ? assignment.returnDate : "-------------"}</Card.Title>

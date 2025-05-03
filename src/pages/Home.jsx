@@ -109,7 +109,7 @@ const Home = () => {
           lg: "repeat(4, 1fr)"
         }} gap="6" overflowY="scroll" h="75svh">
         {assets && assets.map((asset) => (
-          <Card.Root key={asset.id}>
+          <Card.Root key={asset.id} h="fit">
             <Card.Header>
               <Card.Title>{asset.name}</Card.Title>
               <Card.Description>{asset.type}</Card.Description>
