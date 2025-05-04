@@ -19,7 +19,7 @@ const Home = () => {
   let [loading, setLoading] = useState(true);
 
   let searchTerm = useRef("");
-  let filterValue = useRef("");
+  let filterValue = useRef("ALL");
 
   let [jsonAssets, setJsonAssets] = useState(null);
   let [assets, setAssets] = useState(null);
