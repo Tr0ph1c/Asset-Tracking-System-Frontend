@@ -1,10 +1,10 @@
 import { useRef, useState } from "react";
-import { Container, Field, Input, Stack, Portal, Select, createListCollection, Flex, Button, FieldRequiredIndicator } from "@chakra-ui/react"
+import { Container, Field, Input, Stack, Flex, Button, FieldRequiredIndicator } from "@chakra-ui/react"
 import { PasswordInput } from "@/components/ui/password-input";
 
 // Helping functions
-import { validateEmail, validateRequiredField, staffEndPoint } from "/src/utilities/Helper.js";
-import { loginEndPoint } from "@/utilities/Helper";
+import { validateEmail, validateRequiredField, loginEndPoint } from "/src/utilities/Helper.js";
+import { isConnected } from "/src/utilities/Fallback.js";
 import { useNavigate } from "react-router";
 import { toaster } from "@/components/ui/toaster";
 
@@ -73,28 +73,41 @@ const SignIn = () => {
 
         setIsSubmitting(true);
 
-        fetch(loginEndPoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData.current)
-        }).then((response) => {
-            if (response.status == 401) throw new Error('Incorrect username or password');
-            if (!response.ok) throw new Error('Failed to submit form');
+        let connectedPromise = isConnected();
+        connectedPromise.then((connected) => {
+            console.log("CONNTECTED: " + connected);
 
-            return response.json();
-        }).then((data) => {
-            sessionStorage.setItem("id", data.id);
-            sessionStorage.setItem("role", data.role);
-            navigate("/manager-home")
-        }).catch((error) => {
-            console.log(error);
-            toaster.create({
-                title: error.message,
-                type: "error",
-            });
-        }).finally(() => { setIsSubmitting(false) });
+            if (connected) {
+                fetch(loginEndPoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData.current)
+                }).then((response) => {
+                    if (response.status == 401) throw new Error('Incorrect username or password');
+                    if (!response.ok) throw new Error('Failed to submit form');
+
+                    return response.json();
+                }).then((data) => {
+                    sessionStorage.setItem("id", data.id);
+                    sessionStorage.setItem("role", data.role);
+                    navigate("/manager-home")
+                }).catch((error) => {
+                    console.log(error);
+                    toaster.create({
+                        title: error.message,
+                        type: "error",
+                    });
+                }).finally(() => { setIsSubmitting(false) });
+            } else {
+                // fall back response
+                sessionStorage.setItem("id", 1234);
+                sessionStorage.setItem("role", "MANAGER");
+                navigate("/manager-home")
+            }
+        });
+
     }
 
     //UI
