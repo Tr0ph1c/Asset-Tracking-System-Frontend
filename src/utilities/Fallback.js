@@ -1,6 +1,6 @@
 export async function isConnected() {
     try {
-        const response = await fetch('http://localhost:8761/', { method: 'HEAD' });
+        const response = await fetch('http://localhost:8080/api/tracker/asset', { method: 'GET' });
         if (response.ok) {
             return true;
         } else {

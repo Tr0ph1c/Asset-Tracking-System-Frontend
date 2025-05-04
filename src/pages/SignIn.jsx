@@ -76,6 +76,7 @@ const SignIn = () => {
         let connectedPromise = isConnected();
         connectedPromise.then((connected) => {
             console.log("CONNTECTED: " + connected);
+            sessionStorage.setItem("connected", connected);
 
             if (connected) {
                 fetch(loginEndPoint, {

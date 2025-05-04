@@ -2,28 +2,37 @@ import { historyEndPoint } from '@/utilities/Helper';
 import { Card, Container, Flex, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react'
 
+const FALLBACK_DATA = [{ "id": 1, "assignedDate": "2025-05-01", "returnDate": "2025-05-01", "employee": { "id": 1, "name": "Ahmed", "role": "STAFF", "email": "ahmedstaffmember@gmail.com", "password": "1234" }, "asset": { "id": 3, "name": "Projector", "type": "device", "serialNumber": null, "status": "AVAILABLE", "usedBy": null } }, { "id": 2, "assignedDate": "2025-05-01", "returnDate": "2025-05-01", "employee": { "id": 1, "name": "Ahmed", "role": "STAFF", "email": "ahmedstaffmember@gmail.com", "password": "1234" }, "asset": { "id": 5, "name": "Printer", "type": "device", "serialNumber": null, "status": "INUSE", "usedBy": 1 } }, { "id": 3, "assignedDate": "2025-05-01", "returnDate": "2025-05-01", "employee": { "id": 1, "name": "Ahmed", "role": "STAFF", "email": "ahmedstaffmember@gmail.com", "password": "1234" }, "asset": { "id": 3, "name": "Projector", "type": "device", "serialNumber": null, "status": "AVAILABLE", "usedBy": null } }, { "id": 4, "assignedDate": "2025-05-01", "returnDate": "2025-05-01", "employee": { "id": 1, "name": "Ahmed", "role": "STAFF", "email": "ahmedstaffmember@gmail.com", "password": "1234" }, "asset": { "id": 5, "name": "Printer", "type": "device", "serialNumber": null, "status": "INUSE", "usedBy": 1 } }, { "id": 5, "assignedDate": "2025-05-01", "returnDate": null, "employee": { "id": 1, "name": "Ahmed", "role": "STAFF", "email": "ahmedstaffmember@gmail.com", "password": "1234" }, "asset": { "id": 5, "name": "Printer", "type": "device", "serialNumber": null, "status": "INUSE", "usedBy": 1 } }, { "id": 6, "assignedDate": "2025-05-02", "returnDate": "2025-05-02", "employee": { "id": 1, "name": "Ahmed", "role": "STAFF", "email": "ahmedstaffmember@gmail.com", "password": "1234" }, "asset": { "id": 3, "name": "Projector", "type": "device", "serialNumber": null, "status": "AVAILABLE", "usedBy": null } }, { "id": 7, "assignedDate": "2025-05-03", "returnDate": null, "employee": { "id": 1, "name": "Ahmed", "role": "STAFF", "email": "ahmedstaffmember@gmail.com", "password": "1234" }, "asset": { "id": 7, "name": "Office", "type": "space", "serialNumber": null, "status": "INUSE", "usedBy": 1 } }];
+
 const History = () => {
+    let isConnected = (sessionStorage.getItem("connected") == "true");
+
     let [error, setError] = useState(false);
     let [loading, setLoading] = useState(true);
 
     let [history, setHistory] = useState(null);
 
     useEffect(() => {
-        fetch(historyEndPoint, { method: "GET" })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Unexpected Error, error code: " + response.status);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setHistory(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
-            });
+        if (!isConnected) {
+            setHistory(FALLBACK_DATA);
+            setLoading(false);
+        } else {
+            fetch(historyEndPoint, { method: "GET" })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Unexpected Error, error code: " + response.status);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    setHistory(data);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    setError(error.message);
+                    setLoading(false);
+                });
+        }
     }, []);
 
     if (loading) return <Flex w="100%" h="100%" justifyContent="center" alignItems="center"><div>Loading history...</div></Flex>;

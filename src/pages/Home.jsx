@@ -2,6 +2,9 @@ import { useRef, useState, useEffect } from "react";
 import { Input, Grid, Card, Button, Tag, Flex, Select, Portal, createListCollection } from "@chakra-ui/react";
 import { assetEndPoint, assignAssetEndPoint, leaveAssetEndPoint, maintainAssetEndPoint } from "@/utilities/Helper";
 import { toaster } from "@/components/ui/toaster";
+import { isConnected } from "@/utilities/Fallback";
+
+const FALLBACK_DATA = [{ "id": 3, "name": "Projector", "type": "device", "serialNumber": null, "status": "AVAILABLE", "usedBy": null }, { "id": 5, "name": "Printer", "type": "device", "serialNumber": null, "status": "INUSE", "usedBy": 1 }, { "id": 7, "name": "Office", "type": "space", "serialNumber": null, "status": "INUSE", "usedBy": 1 }, { "id": 10, "name": "Desk", "type": "tool", "serialNumber": null, "status": "AVAILABLE", "usedBy": null }, { "id": 11, "name": "LaserJet", "type": "device", "serialNumber": null, "status": "MAINTENANCE", "usedBy": null }, { "id": 12, "name": "Office 2", "type": "space", "serialNumber": null, "status": "AVAILABLE", "usedBy": null }];
 
 const STATUS_CODES = createListCollection({
   items: [
@@ -14,6 +17,7 @@ const STATUS_CODES = createListCollection({
 
 const Home = () => {
   let isManager = (sessionStorage.getItem("role") == "MANAGER");
+  let isConnected = (sessionStorage.getItem("connected") == "true");
 
   let [error, setError] = useState(false);
   let [loading, setLoading] = useState(true);
@@ -25,23 +29,31 @@ const Home = () => {
   let [assets, setAssets] = useState(null);
 
   useEffect(() => {
-    fetch(assetEndPoint, { method: "GET" })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unexpected Error, error code: " + response.status);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (!isManager) data = data.filter((asset) => asset.usedBy == sessionStorage.getItem("id"));
-        setJsonAssets(data);
-        setAssets(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
+    console.log(isConnected);
+    // Fallback
+    if (!isConnected) {
+      setJsonAssets(FALLBACK_DATA);
+      setAssets(FALLBACK_DATA);
+      setLoading(false);
+    } else {
+      fetch(assetEndPoint, { method: "GET" })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Unexpected Error, error code: " + response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (!isManager) data = data.filter((asset) => asset.usedBy == sessionStorage.getItem("id"));
+          setJsonAssets(data);
+          setAssets(data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setLoading(false);
+        });
+    }
   }, []);
 
   if (loading) return <Flex w="100%" h="100%" justifyContent="center" alignItems="center"><div>Loading assets...</div></Flex>;
@@ -129,19 +141,16 @@ const Home = () => {
   )
 }
 
-// TODO:
-// Add functionality to the buttons using the
-// asset object passed to the function
 function AssetButtons({ _isManager, _asset }) {
   if (_isManager) {
     return (
       <>
         <Button size="xs" fontSize="sm" colorPalette="green"
-          name={_asset.id} onClick={assignAsset}>Assign</Button>
+          name={_asset.id} onClick={isConnected && assignAsset}>Assign</Button>
         <Button size="xs" fontSize="sm" colorPalette="teal"
-          name={_asset.id} onClick={maintainAsset}>Maintain</Button>
+          name={_asset.id} onClick={isConnected && maintainAsset}>Maintain</Button>
         <Button size="xs" fontSize="sm" colorPalette="red" variant="subtle"
-          name={_asset.id} onClick={deleteAsset}>Delete</Button>
+          name={_asset.id} onClick={isConnected && deleteAsset}>Delete</Button>
       </>
     );
   } else {
